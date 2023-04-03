@@ -5,28 +5,66 @@
 	import SaveButton from "../../components/SaveButton.svelte";
 	import CancelButton from "../../components/CancelButton.svelte";
 	import CloseButton from "../../components/CloseButton.svelte";
-    import { Icon, ArrowSmLeft } from "svelte-hero-icons";
+    import { Icon, CheckCircle, DotsCircleHorizontal, Pause, MinusCircle } from "svelte-hero-icons";
 	import BackButton from "../../components/BackButton.svelte";
+	import LineChart from "../../components/LineChart.svelte";
+	import PieChart from "../../components/PieChart.svelte";
 </script>
 
 <main>
-    <div class="md:grid grid-cols-3 gap-2">
-        <Card title="Sample">
+    <div class="md:grid text-center grid-cols-3 gap-2">
+        <Card title="Open" labelIcon={DotsCircleHorizontal} labelColor="text-sky-700">
             <svelte:fragment slot="content">
-                <div class="h-1/2 w-1/2"></div>
+                <div class="text-4xl font-semibold p-4">20</div>
+                <div class="text-gray-400">Tickets to be resolved</div>
+
             </svelte:fragment>
         </Card>
-        <Card title="Sample"></Card>
-        <Card title="Sample">
+        <Card title="Pending" labelIcon={Pause} styling="mt-2 lg:mt-0" labelColor="text-yellow-600"> 
             <svelte:fragment slot="content">
-                <!-- <Button label={'Tickets'} click={() => goto("/tickets")} />
-                <SaveButton click={() => console.log('Working')} />
-                <CancelButton click={() => console.log('Working')} />
-                <CloseButton click={() => console.log('Working')}/>
-                <BackButton click={()=> console.log("working")} /> -->
+                <div class="text-4xl font-semibold p-4">10</div>
+                <div class="text-gray-400">Tickets awaiting customer's response</div>
+            </svelte:fragment>
+
+        </Card>
+        <Card title="Closed" labelIcon={MinusCircle} styling="mt-2 lg:mt-0" labelColor="text-red-600">
+            <svelte:fragment slot="content">
+                <div class="text-4xl font-semibold p-4">12</div>
+                <div class="text-gray-400">Closed tickets</div>
+
             </svelte:fragment>
         </Card>
 
+    </div>
+    <div class="md:grid text-center grid-cols-2 mt-2 lg:mt-4 gap-2">
+        <Card title="Resolved" labelIcon={CheckCircle} labelColor="text-green-700">
+            <svelte:fragment slot="content">
+                <div class="text-5xl font-semibold p-4">22</div>
+                <div class="text-gray-400">Tickets resolved successfully</div>
+
+            </svelte:fragment>
+        </Card>
+        <Card title="High Priority" styling="mt-2 lg:mt-0" labelColor="text-sky-700">
+            <svelte:fragment slot="content">
+                <div class="text-5xl font-semibold p-4">9</div>
+                <div class="text-gray-400">Tickets for immediate attention</div>
+
+            </svelte:fragment>
+        </Card>
+    </div>
+    <div class="md:grid text-center grid-cols-2 mt-2 lg:mt-4 gap-2">
+        <Card title="" labelColor="text-sky-700">
+            <svelte:fragment slot="content">
+                <div class="">Summary Data</div>
+                <LineChart />
+            </svelte:fragment>
+        </Card>
+        <Card title="" labelColor="text-sky-700" styling="mt-2 lg:mt-0">
+            <svelte:fragment slot="content">
+                <div class="">Summary Data</div>
+                <PieChart />
+            </svelte:fragment>
+        </Card>
     </div>
 
 </main>

@@ -27,7 +27,7 @@
 
 <a href={to} class="flex items-center p-4 text-base font-normal text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-300" class:active={toCompare() === getLink(to)}>
     <Icon aria-hidden="true" src={icon} class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-500" />
-    <span class="ml-3">{name}</span>
+    <span class="ml-3 font-medium">{name}</span>
  </a>
 
  <style>

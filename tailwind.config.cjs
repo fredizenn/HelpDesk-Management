@@ -4,7 +4,13 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require("daisyui")],
+  // plugins: [require("daisyui")],
+  plugins: [
+    // (({ addVariant }) => {
+    //   addVariant('$touched', '&[data-$touched]')
+    // }),
+    require("daisyui")
+  ],
 
   daisyui: {
     themes: false,

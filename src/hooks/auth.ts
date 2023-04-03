@@ -10,3 +10,4 @@ export const getUserDetails = async (username: any, password: any) => {
     if(username === user && password === pass)
     return 1
 }
+

@@ -5,7 +5,7 @@
 </script>
 
 <div class="tooltip tooltip-bottom" data-tip="Back">
-    <button class="btn btn-circle btn-sm btn-outline border-2" on:click={click}>
-        <Icon src={ArrowSmLeft} class="h-5 w-5" />
+    <button class="btn btn-circle btn-md btn-outline border-2" on:click={click}>
+        <Icon src={ArrowSmLeft} class="h-7 w-7" />
     </button>
 </div>

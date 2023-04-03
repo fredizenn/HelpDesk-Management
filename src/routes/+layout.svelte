@@ -22,7 +22,6 @@
     </script>
     
   
-    <!-- {#if $store != null}  -->
     <div class="drawer drawer-mobile h-screen w-full bg-gray-100">
       <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
       <div class="drawer-content flex flex-col">
@@ -33,8 +32,7 @@
       </div>
       <Sidebar />
     </div>
-    <!-- {/if}
-    <slot></slot> -->
+    <!-- <slot></slot> -->
   
   
     
