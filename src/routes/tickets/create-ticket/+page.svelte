@@ -2,12 +2,12 @@
 	import { goto } from '$app/navigation';
 	import SaveButton from '../../../components/SaveButton.svelte';
 	import BackButton from '../../../components/BackButton.svelte';
-	import Card from '../../../components/Card.svelte';
+	import Card from '../../../components/ui/Card.svelte';
 	import { createForm } from 'felte';
 	import { reporter, ValidationMessage } from '@felte/reporter-svelte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import VIcon from '../../../components/VIcon.svelte';
+	import VIcon from '../../../components/controls/VIcon.svelte';
 
 	yup.setLocale({
 		mixed: {

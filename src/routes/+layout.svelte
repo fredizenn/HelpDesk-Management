@@ -1,13 +1,14 @@
 <script lang='ts'>
     import "../app.css";
-    import Nav from "../components/Nav.svelte";
-      import Sidebar from "../components/Sidebar.svelte";
+    import Nav from "../components/ui/Nav.svelte";
+    import Sidebar from "../components/ui/Sidebar.svelte";
     import LoginComponent from "../components/LoginComponent.svelte";
-    import { store } from "../hooks/auth";
     import { page } from "$app/stores";
+    import { loggedIn, token } from "../store";
+	import { onMount } from "svelte";
+	import { goto } from "$app/navigation";
   
     $: pageTitle = $page.url.pathname
-
     const getPageTitle = (path: string) => {
       if(!path) return ''
       if(path === '') return ''
@@ -19,9 +20,29 @@
     
     }
 
+    onMount( () => {
+        $token = JSON.stringify(localStorage.getItem('token'))
+        
+        if ($token !== null || $token !== '') {
+          $loggedIn = true
+        }
+        // else {
+        //     $loggedIn = true
+        //     goto('/dashboard')
+        // }
+
+    })
+
+ 
+
     </script>
     
-  
+
+    {#if $loggedIn === false}
+    <slot />
+
+   
+    {:else}
     <div class="drawer drawer-mobile h-screen w-full bg-gray-100">
       <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
       <div class="drawer-content flex flex-col">
@@ -32,6 +53,9 @@
       </div>
       <Sidebar />
     </div>
+    {/if}
+
+     
     <!-- <slot></slot> -->
   
   

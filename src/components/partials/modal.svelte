@@ -50,7 +50,7 @@
 </script>
 
 
-<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true" class:hidden={!open}>
+<div class="relative z-[1000]" aria-labelledby="modal-title" role="dialog" aria-modal="true" class:hidden={!open}>
   {#if open}
   <div class="fixed inset-0 bg-gray-500 bg-opacity-50 transition-opacity" 
     in:fade={{duration:300, easing: cubicIn}} 
@@ -60,7 +60,7 @@
   <div class="fixed z-10 inset-0  overflow-y-auto " >
     <div class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0 ">
       {#if open}
-      <div class="relative text-left bg-white overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg  sm:w-full  "
+      <div class="relative text-left bg-white overflow-hidden shadow-xl transform transition-all sm:my-8 lg:max-w-xl xl:max-w-2xl sm:w-full  "
           class:bg-gray={grayBg}
           class:sm:max-w-7xl={xl}
           class:sm:max-w-4xl={lg}

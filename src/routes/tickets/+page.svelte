@@ -1,59 +1,161 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import Button from '../../components/Button.svelte';
-	import BackButton from '../../components/BackButton.svelte';
-	import Modal from '../../components/modal.svelte';
-	import AddButton from '../../components/AddButton.svelte';
+	import Modal from '../../components/partials/modal.svelte';
+	import AddButton from '../../components/controls/AddButton.svelte';
 	import Icon from '@iconify/svelte';
 	import officeBuildingMarkerOutline from '@iconify/icons-mdi/office-building-marker-outline';
 	import groupAccess from '@iconify/icons-carbon/group-access';
 	import calendarIcon from '@iconify/icons-carbon/calendar';
 	import taskSettings from '@iconify/icons-carbon/task-settings';
-
+	import { createForm } from 'felte';
+	import { reporter, ValidationMessage } from '@felte/reporter-svelte';
+	import { validator } from '@felte/validator-yup';
+	import * as yup from 'yup';
+	import VIcon from '../../components/controls/VIcon.svelte';
+	import Svelecte from 'svelecte';
+	import { axiosInstance } from '../../store';
+	import { onMount } from 'svelte';
 
 	let showForm = false;
 
-	let ticketData: any = [
+	let ticketPriority = [
 		{
-			details: 'Student ID not found: 1090784',
-			priority: 'Mid',
-			status: 'Open',
-			departmentName: 'Academic',
-			facultyName: 'IT',
-			code: 'WT01',
-			type: 'Issue'
+			value: "HIGH",
+			text: "HIGH"
 		},
 		{
-			details: 'Fee schedule for degree IT',
-			priority: 'Low',
-			status: 'Open',
-			departmentName: 'Administration',
-			facultyName: '',
-			code: 'WT02',
-			type: 'Enquiry'
-		}
-	];
-
-	let color = ""
-	$: manageBadge = (priority: string) => {
-		switch (priority) 
+			value: "MID",
+			text: "MID"
+		},
 		{
-			case "HIGH":
-			 return	color = "red";
-			case "MID":
-			return color = "yellow";
-			case "LOW":
-			return color="gray";
-			default: 
-			return color = "gray";
+			value: "LOW",
+			text: "LOW"
 		}
+	]
+
+	let ticketTypes = [
+		
+		{
+			value: "SERVICE REQUEST",
+			text: "SERVICE REQUEST"
+		},
+		{
+			value: "CHANGE REQUEST",
+			text: "CHANGE REQUEST"
+		},
+		{
+			value: "INCIDENT",
+			text: "INCIDENT"
+		},
+		{
+			value: "PROBLEM",
+			text: "PROBLEM"
+		}
+	]
+
+	let ticketData: any = [];
+
+	
+
+	let departmentData: any = [];
+	let departments: any = [];
+	let facultyData: any = [];
+	let selectedType: any = "";
+	let selectedPriority: any = "";
+
+
+	
+
+	departmentData.subscribe = (values: any) => {
+		let data: any = []
+		values.map((x: any) => {
+			let d = { value: '', text: ''}
+			d = {value: x.Id, text: x.name}
+
+			return data.push(d);
+		})
+		departments = data;
 	}
+
+	$: manageBadge = (priority: any) => {
+		priority.toUpperCase();
+		if (priority === "HIGH")  {
+			return "red"
+		} else if (priority === "MID") {
+			return "yellow"
+		}
+		else {
+			return "gray"
+		}
+		
+	}
+
+
+
+	yup.setLocale({
+		mixed: {
+			default: 'Not valid',
+			required: 'Must not be empty'
+		},
+		string: {
+			email: 'Must be a valid email',
+			min: 'Must not be empty'
+		}
+	});
+
+	const schema = yup.object().shape({
+		contactName: yup
+			.string()
+			.matches(/^[aA-zZ, -]+$/, 'Cannot contain alphanumerics')
+			.required(),
+		contactPhoneNumber: yup
+			.string()
+			.matches(/^[0-9]+$/, 'Must be only digits')
+			.required(),
+		contactEmail: yup.string().email().required(),
+		ticketDetails: yup.string().required()
+	});
+
+	const { form, touched, data, isValid, errors } = createForm({
+		initialValues: {
+			customerName: '',
+			ticketDetails: '',
+			contactName: '',
+			contactPhoneNumber: '',
+			contactEmail: '',
+			type: selectedType,
+			priority: selectedPriority
+			
+		},
+		extend: [validator({ schema }), reporter]
+	});
+
+	$: changeFocus = (touch: any, error: any) => {
+		let focusClass = `border-green-600`;
+		if (touch === true && error === null) {
+			return focusClass;
+		} else if (touch === false && error === null) {
+			return;
+		} else {
+			return (focusClass = `border-red-600`);
+		}
+	};
+
+	onMount(async () => {
+		axiosInstance.get('/tickets')
+		.then((response) => {
+			ticketData = response.data
+			console.log(ticketData)
+		})
+		.catch((error) => {
+			console.log(error)
+		}) 
+	});
 </script>
 
 <div class="flex justify-end">
 	<AddButton dataTip="Create Ticket" click={() => (showForm = true)} />
 </div>
-<div class="mt-2 overflow-auto ">
+<div class="mt-2 overflow-auto">
 	<ul class="">
 		{#each ticketData as ticket}
 			<li class="m-2 rounded-sm bg-white shadow">
@@ -71,7 +173,7 @@
 								</p>
 								
 								<p
-									class={`"inline-flex rounded-full bg-${manageBadge(ticket.priority.toUpperCase())}-100 px-2 text-xs font-semibold leading-5 text-green-800"`}
+									class={`"inline-flex rounded-full bg-${manageBadge(ticket.priority)}-100 px-2 text-xs font-semibold leading-5 text-green-800"`}
 								>
 									{ticket?.priority}
 								</p>
@@ -79,12 +181,12 @@
 							
 						</div>
 						<div class="mt-2 sm:flex sm:justify-between">
-							<div class="sm:flex space-x-2">
+							<div class="sm:flex space-y-2 md:space-y-0 md:space-x-2">
 								<p
 									class="flex items-center text-sm text-gray-500 tooltip tooltip-top"
 									data-tip="Department"
 								>
-									<span class="md:pr-1">
+									<span class="pr-1">
 										<Icon icon={officeBuildingMarkerOutline} class="w-5 h-5" />
 									</span>
 									{ticket?.departmentName}
@@ -94,7 +196,7 @@
 										class="flex items-center text-sm text-gray-500 sm:ml-6 sm:mt-0 tooltip tooltip-top"
 										data-tip="Faculty"
 									>
-										<span class="md:pr-1"> <Icon icon={groupAccess} class="w-5 h-5" /> </span>
+										<span class="pr-1"> <Icon icon={groupAccess} class="w-5 h-5" /> </span>
 										{ticket?.facultyName}
 									</p>
 
@@ -103,7 +205,7 @@
 									class="flex items-center text-sm text-gray-500 tooltip tooltip-top"
 									data-tip="Ticket type"
 								>
-									<span class="md:pr-1">
+									<span class="pr-1">
 										<Icon icon={taskSettings} class="w-5 h-5" />
 									</span>
 									{ticket?.type}
@@ -119,7 +221,7 @@
 							</div>
 						</div>
 						<div class="mt-2 text-sm font-medium text-gray-600">
-							{ticket?.details}
+							{ticket?.ticketDescription}
 						</div>
 					</div>
 					
@@ -130,27 +232,104 @@
 </div>
 
 <Modal title="New Ticket" bind:open={showForm} showIcon={false} on:close={() => (showForm = false)}>
-	<form>
+	<form use:form>
 		<fieldset class="p-4 border border-gray-200 rounded-md">
 			<legend class="bg-blue-100 px-2 text-blue-500 rounded-md tracking-2 text-sm"
-				>Ticket Details</legend
+				>Ticket Info</legend
 			>
-			<div class="flex flex-col gap-4">
+			<div class="md:grid grid-cols-2 gap-2">
 				<div class="form-control">
-					<input class="input input-bordered" />
+					<label for="details" class="label label-text">Type</label>
+					<Svelecte options={ticketTypes} id="type" bind:value={selectedType} />
 				</div>
 				<div class="form-control">
-					<input class="input input-bordered" />
+					<label for="priority" class="label label-text">Priority</label>
+					<Svelecte options={ticketPriority} id="priority" bind:value={selectedPriority} />
 				</div>
 				<div class="form-control">
-					<input class="input input-bordered" />
+					<label for="department" class="label label-text">Department</label>
+					<Svelecte options={departments} id="department" />
 				</div>
 				<div class="form-control">
-					<input class="input input-bordered" />
+					<label for="faculty" class="label label-text">Faculty</label>
+					<Svelecte options={facultyData} id="faculty"/>
 				</div>
+				<div>
+					<div class="form-control relative">
+						<label class="label label-text" for="contact-name">Contact Name</label>
+						<input
+							id="contact-name"
+							class="rounded input input-bordered {changeFocus(
+								$touched.contactName,
+								$errors.contactName
+							)}"
+							type="text"
+							name="contactName"
+						/>
+						<VIcon touched={$touched.contactName} errors={$errors.contactName} />
+					</div>
+					<ValidationMessage for="contactName" let:messages={message}>
+						<span class="text-red-600 text-sm pt-1">{message || ''}</span>
+					</ValidationMessage>
+				</div>
+				<div>
+					<div class="form-control relative">
+						<label class="label label-text" for="contactNumber">Contact Phone Number</label>
+						<input
+							id="contactNumber"
+							class="rounded input input-bordered {changeFocus(
+								$touched.contactPhoneNumber,
+								$errors.contactPhoneNumber
+							)}"
+							type="text"
+							name="contactPhoneNumber"
+						/>
+						<VIcon touched={$touched.contactPhoneNumber} errors={$errors.contactPhoneNumber} />
+					</div>
+					<ValidationMessage for="contactPhoneNumber" let:messages={message}>
+						<span class="text-red-600 text-sm pt-1">{message || ''}</span>
+					</ValidationMessage>
+				</div>
+				<div>
+					<div class="form-control relative">
+						<label class="label label-text" for="contactEmail">Contact Email</label>
+						<input
+							id="contactEmail"
+							class="rounded input input-bordered {changeFocus(
+								$touched.contactEmail,
+								$errors.contactEmail
+							)}"
+							type="text"
+							name="contactEmail"
+						/>
+						<VIcon touched={$touched.contactEmail} errors={$errors.contactEmail} />
+					</div>
+					<ValidationMessage for="contactEmail" let:messages={message}>
+						<span class="text-red-600 text-sm pt-1">{message || ''}</span>
+					</ValidationMessage>
+				</div>
+				<div>
+					<div class="form-control relative">
+						<label class="label label-text" for="ticketDetails">Ticket Details</label>
+						<input
+							id="ticketDetails"
+							class="rounded input input-bordered {changeFocus(
+								$touched.ticketDetails,
+								$errors.ticketDetails
+							)}"
+							type="text"
+							name="ticketDetails"
+						/>
+						<VIcon touched={$touched.ticketDetails} errors={$errors.ticketDetails} />
+					</div>
+					<ValidationMessage for="ticketDetails" let:messages={message}>
+						<span class="text-red-600 text-sm pt-1">{message || ''}</span>
+					</ValidationMessage>
+				</div>
+				
 			</div>
 		</fieldset>
 
-		<button type="submit" class="btn btn-info w-full my-6">SAVE</button>
+		<button type="submit" disabled={$isValid ? false : true } class="btn btn-info w-full my-6">SAVE</button>
 	</form>
 </Modal>

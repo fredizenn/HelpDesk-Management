@@ -1,1 +1,6 @@
-<div>I am live!</div>
+<script>
+    import LoginComponent from "../../components/LoginComponent.svelte";
+</script>
+
+
+<LoginComponent />

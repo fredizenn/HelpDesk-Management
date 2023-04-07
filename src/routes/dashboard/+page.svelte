@@ -1,14 +1,8 @@
 <script lang="ts">
-    import Card from "../../components/Card.svelte";
-    import Button from "../../components/Button.svelte";
-	import { goto } from "$app/navigation";
-	import SaveButton from "../../components/SaveButton.svelte";
-	import CancelButton from "../../components/CancelButton.svelte";
-	import CloseButton from "../../components/CloseButton.svelte";
+    import Card from "../../components/ui/Card.svelte";
     import { Icon, CheckCircle, DotsCircleHorizontal, Pause, MinusCircle } from "svelte-hero-icons";
-	import BackButton from "../../components/BackButton.svelte";
-	import LineChart from "../../components/LineChart.svelte";
-	import PieChart from "../../components/PieChart.svelte";
+	import LineChart from "../../components/charts/LineChart.svelte";
+	import PieChart from "../../components/charts/PieChart.svelte";
 </script>
 
 <main>
