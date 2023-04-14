@@ -9,7 +9,7 @@
 </script>
 
 
-<div class="p-6 text-gray-800 rounded-sm shadow hover:shadow-md
+<div class="p-6 bg-white text-gray-800 rounded-sm shadow hover:shadow-md
   {styling}">
   <div class="flex card-header justify-between">
     <div class="text-left font-semibold {titleStyle}">{title}</div>

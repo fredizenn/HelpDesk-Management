@@ -7,41 +7,14 @@
 	import * as yup from 'yup';
 	import VIcon from './controls/VIcon.svelte';
     import axios from 'axios';
-	import { toasts, ToastContainer, FlatToast } from 'svelte-toasts';
+    import toast, { Toaster } from 'svelte-french-toast';
     import { loggedIn, token } from "../store";
 
-    const showSuccessToast = (
-		description: any = 'Logged in successfully'
-	) => {
-		toasts.add({
-			title: 'Success',
-			description: description,
-			duration: 3000,
-			placement: 'top-right',
-			type: 'success',
-			theme: 'dark',
-			showProgress: true
-		});
-	};
-
-    const showErrorToast = (
-		title: any = 'Error',
-		description: any = ''
-	) => {
-		toasts.add({
-			title: title,
-			description: description,
-			duration: 3000,
-			placement: 'top-right',
-			type: 'error',
-			theme: 'dark',
-			showProgress: true
-		});
-	};
 
     let username = '';
     let password = '';
     let error = '';
+    let loading: boolean;
 
     yup.setLocale({
 		mixed: {
@@ -69,14 +42,17 @@
         extend: [validator({ schema }), reporter()],   
         
         onSubmit: async (values) => {
-            const response = await axios.post("https://localhost:7085/api/auth/login", {
+            loading = true
+            try {
+                const response = await axios.post("https://localhost:7085/api/auth/login", {
                 ...values
             },
             { withCredentials: false});
 
             if (response.status === 200) {
             
-                showSuccessToast(response.data?.message)
+                toast.dismiss();
+                toast.success(response.data?.message)
                 localStorage.setItem('token', response.data?.token)
                 $token = JSON.stringify(localStorage.getItem('token'))
                 $loggedIn = true
@@ -86,28 +62,39 @@
 
             }
             else {
-                showErrorToast();
+                toast.error('An error occurred');
             }
+            }
+            catch (error: any) {
+                toast.error(error)
+            }
+            loading = false
+            
         }
     })
+
+
 </script>
 
-
-<Card title="Login" titleStyle="text-white" styling="md:mt-28 md:w-2/6 mx-auto align-middle bg-slate-800">
+<Toaster />
+<Card title="Login" titleStyle="" styling="md:mt-28 md:w-2/6 mx-auto align-middle bg-gray-200">
     <svelte:fragment slot="content">
 <form use:form class=""> 
         <div class="form-control">
-            <label for = "userName" class="label label-text"><span class="label-text text-white">Username</span></label>
+            <label for = "userName" class="label label-text"><span class="label-text ">Username</span></label>
             <input type="text" name="userName" class="input input-bordered w-full" id="username" />
         </div>
         <div class="form-control">
-            <label for="password" class="label label-text"><span class="label-text text-white">Password</span></label>
+            <label for="password" class="label label-text"><span class="label-text">Password</span></label>
             <input type="password" name="password" class="input input-bordered w-full" id="password"  />
         </div>
         <div class="grid content-center">
             <!-- <SaveButton styling="" disable={false} /> -->
+            {#if loading}
+            <button class="btn rounded-md border-2 w-1/2 mt-4 mx-auto align middle" disabled={true}>LOGGING IN...</button>
+            {:else}
             <button class="btn btn-info rounded-md border-2 w-1/2 mt-4 mx-auto align middle" disabled={false} type="submit">LOGIN</button>
-
+            {/if}
 
         </div>
         <!-- <button type="submit" class="btn btn-primary mx-auto align-middle">Submit</button> -->

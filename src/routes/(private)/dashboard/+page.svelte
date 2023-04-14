@@ -1,17 +1,19 @@
 <script lang="ts">
-    import Card from "../../components/ui/Card.svelte";
+    import Card from "../../../components/ui/Card.svelte";
     import { Icon, CheckCircle, DotsCircleHorizontal, Pause, MinusCircle } from "svelte-hero-icons";
-	import LineChart from "../../components/charts/LineChart.svelte";
-	import PieChart from "../../components/charts/PieChart.svelte";
-</script>
+	import LineChart from "../../../components/charts/LineChart.svelte";
+	import PieChart from "../../../components/charts/PieChart.svelte";
+    import toast, { Toaster } from 'svelte-french-toast';
+	import { onMount } from "svelte";
 
+</script>
+<Toaster />
 <main>
     <div class="md:grid text-center grid-cols-3 gap-2">
         <Card title="Open" labelIcon={DotsCircleHorizontal} labelColor="text-sky-700">
             <svelte:fragment slot="content">
                 <div class="text-4xl font-semibold p-4">20</div>
                 <div class="text-gray-400">Tickets to be resolved</div>
-
             </svelte:fragment>
         </Card>
         <Card title="Pending" labelIcon={Pause} styling="mt-2 lg:mt-0" labelColor="text-yellow-600"> 
@@ -25,7 +27,6 @@
             <svelte:fragment slot="content">
                 <div class="text-4xl font-semibold p-4">12</div>
                 <div class="text-gray-400">Closed tickets</div>
-
             </svelte:fragment>
         </Card>
 

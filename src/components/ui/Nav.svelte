@@ -7,7 +7,7 @@
     const logout = () => {
       localStorage.setItem('token', '')
       $loggedIn = false
-      goto('/')
+      goto('/login')
     }
 </script>
 

@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import Card from '../../components/ui/Card.svelte';
-	import BackButton from '../../components/controls/BackButton.svelte';
+	import Card from '../../../components/ui/Card.svelte';
+	import BackButton from '../../../components/controls/BackButton.svelte';
 	import * as yup from 'yup';
-	import SaveButton from '../../components/controls/SaveButton.svelte';
+	import SaveButton from '../../../components/controls/SaveButton.svelte';
 	import { validator } from '@felte/validator-yup';
 	import reporter from '@felte/reporter-tippy';
 	import 'tippy.js/dist/tippy.css';
-	import AddButton from '../../components/controls/AddButton.svelte';
-	import Modal from '../../components/partials/modal.svelte';
+	import AddButton from '../../../components/controls/AddButton.svelte';
+	import Modal from '../../../components/partials/modal.svelte';
 
 	let showForm = false;
 	let agentData: any = [
