@@ -13,10 +13,10 @@
 	let showForm = false;
 	let agentData: any = [
 		{
-			name: 'Frederick Boafo',
-			phoneNumber: '0208685163',
-			email: 'kofiakuffoboafo@gmail.com',
-			role: 'Agent'
+			name: 'Michelle Richter-Addo',
+			phoneNumber: '0200000000',
+			email: 'addomichel9@gmail.com',
+			role: 'Admin'
 		},
 		{
 			name: 'Akosua Ntim',

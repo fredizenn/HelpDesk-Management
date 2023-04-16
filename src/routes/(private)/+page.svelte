@@ -8,17 +8,17 @@
 
 
     
-    onMount(async () => {        
-        let tok = localStorage.getItem('token');
+    // onMount(async () => {        
+    //     let tok = localStorage.getItem('token');
 
-        if (tok !== null || tok !== '') {
-            await goto('/dashboard')
-        }
-        else {
-            goto('/login')
-        }
+    //     if (tok !== null || tok !== '') {
+    //         await goto('/dashboard')
+    //     }
+    //     else {
+    //         goto('/login')
+    //     }
 
-    })
+    // })
 
   
 </script>
