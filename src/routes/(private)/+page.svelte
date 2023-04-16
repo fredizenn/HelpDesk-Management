@@ -21,7 +21,7 @@
     // })
 
     onMount(async () => {
-        goto('dashboard')
+        goto('/dashboard')
     })
 
   
