@@ -20,6 +20,10 @@
 
     // })
 
+    onMount(async () => {
+        goto('dashboard')
+    })
+
   
 </script>
 <Toaster />
