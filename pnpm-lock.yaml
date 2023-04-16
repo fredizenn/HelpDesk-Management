@@ -4,8 +4,10 @@ specifiers:
   '@felte/reporter-svelte': ^1.1.5
   '@felte/reporter-tippy': ^1.1.5
   '@felte/validator-yup': ^1.0.11
+  '@iconify/icons-bx': ^1.2.6
   '@iconify/icons-carbon': ^1.2.16
   '@iconify/icons-eos-icons': ^1.2.6
+  '@iconify/icons-ic': ^1.2.13
   '@iconify/icons-material-symbols': ^1.2.34
   '@iconify/icons-mdi': ^1.2.44
   '@iconify/svelte': ^3.1.1
@@ -56,8 +58,10 @@ dependencies:
   yup: 0.32.11
 
 devDependencies:
+  '@iconify/icons-bx': 1.2.6
   '@iconify/icons-carbon': 1.2.16
   '@iconify/icons-eos-icons': 1.2.6
+  '@iconify/icons-ic': 1.2.13
   '@iconify/icons-material-symbols': 1.2.36
   '@iconify/icons-mdi': 1.2.44
   '@iconify/svelte': 3.1.1_svelte@3.58.0
@@ -362,6 +366,12 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
+  /@iconify/icons-bx/1.2.6:
+    resolution: {integrity: sha512-2gm96RIQ+ieWTV/GgbkQMet9N9rsYbA+6WAmTO7+7FxlR5STpy+biNQZtwvok9OgTWiyTH6niS64o0npzQxMtQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify/icons-carbon/1.2.16:
     resolution: {integrity: sha512-P+E28AAFlM0WyL5/2XNqRrHeY2PjqEshyJ/jXezJddn0/mJidTmeomfFYpEKxZNLU6PQCA6K1HI0sRmM0QV4ow==}
     dependencies:
@@ -370,6 +380,12 @@ packages:
 
   /@iconify/icons-eos-icons/1.2.6:
     resolution: {integrity: sha512-8Nk3/q2SN1qwi36w0S/CeAD55yoLfVix+85iwwVgyqz2VkILBAYUjVusfQXKIHW9KD8Vtymwz/512TXQ1GfM8Q==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify/icons-ic/1.2.13:
+    resolution: {integrity: sha512-TphrhwOvgd7CTmUhz6jgXF+SPnMtvTm03bZsAYbny2kwq4zlkhr9e16YEyPGMvKhjtTqNooA3iZ9Wa+pZ8moXQ==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

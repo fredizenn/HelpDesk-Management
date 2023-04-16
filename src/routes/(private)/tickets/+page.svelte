@@ -17,23 +17,25 @@
 	import { onMount } from 'svelte';
 	import { initTicket } from './ticket-model';
 	import toast, { Toaster } from 'svelte-french-toast';
-
+	import xCircle from '@iconify/icons-bx/x-circle';
+	import outlinePauseCircleOutline from '@iconify/icons-ic/outline-pause-circle-outline';
+	import tickCircleOutline from '@iconify/icons-mdi/tick-circle-outline';
 	import { browser } from '$app/environment';
 
 	let showForm = false;
 
 	let ticketPriority = [
 		{
-			value: 'HIGH',
-			text: 'HIGH'
+			"value": 'HIGH',
+			"text": 'HIGH'
 		},
 		{
-			value: 'MID',
-			text: 'MID'
+			"value": 'MID',
+			"text": 'MID'
 		},
 		{
-			value: 'LOW',
-			text: 'LOW'
+			"value": 'LOW',
+			"text": 'LOW'
 		}
 	];
 
@@ -78,6 +80,18 @@
 			return 'gray';
 		}
 	};
+
+	const changeBadge = (priority: any) => {
+		switch (priority) {
+			case "HIGH":
+				return 'red';
+			case "MID":
+				return 'orange';
+			case "LOW":
+				return 'gray';
+		}
+		
+	}
 
 	yup.setLocale({
 		mixed: {
@@ -233,20 +247,29 @@ console.log({axiosInstance})
 								<p class="truncate text-sm font-medium text-indigo-600">
 									Ticket Code: {ticket?.code}
 								</p>
-								<div class="ml-2 flex flex-shrink-0">
+								<div class="ml-2 space-x-1 flex flex-shrink-0">
 									<p
 										class={`"inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800"`}
-									>
+									>Status:
 										{ticket?.status}
 									</p>
 
 									<p
-										class={`"inline-flex rounded-full bg-${manageBadge(
+										class={`inline-flex rounded-full bg-${changeBadge(
 											ticket.priority.toUpperCase()
-										)}-100 px-2 text-xs font-semibold leading-5 text-green-800"`}
-									>
+										)}-100 px-2 text-xs font-semibold leading-5 text-green-800`}
+									>Priority:
 										{ticket?.priority}
 									</p>
+									<div data-tip="Resolve and close ticket" class="tooltip tooltip-left">
+										<Icon icon={tickCircleOutline} class="w-5 h-5 text-green-700"/>
+									</div>
+									<div data-tip="Hold" class="tooltip tooltip-left">
+										<Icon icon={outlinePauseCircleOutline} class="w-5 h-5 text-yellow-600"/>
+									</div>
+									<div data-tip="Cancel ticket" class="tooltip tooltip-left">
+										<Icon icon={xCircle} class="w-5 h-5 text-red-600"/>
+									</div>
 								</div>
 							</div>
 							<div class="mt-2 sm:flex sm:justify-between">
@@ -379,25 +402,25 @@ console.log({axiosInstance})
 				</div>
 				<div>
 					<div class="form-control relative">
-						<label class="label label-text" for="ticketDetails">Ticket Details</label>
+						<label class="label label-text" for="ticketDescription">Ticket Description</label>
 						<input
-							id="ticketDetails"
+							id="ticketDescription"
 							class="rounded input input-bordered {changeFocus(
-								$touched.ticketDetails,
-								$errors.ticketDetails
+								$touched.ticketDescription,
+								$errors.ticketDescription
 							)}"
 							type="text"
-							name="ticketDetails"
+							name="ticketDescription"
 						/>
-						<VIcon touched={$touched.ticketDetails} errors={$errors.ticketDetails} />
+						<VIcon touched={$touched.ticketDescription} errors={$errors.ticketDescription} />
 					</div>
-					<ValidationMessage for="ticketDetails" let:messages={message}>
+					<ValidationMessage for="ticketDescription" let:messages={message}>
 						<span class="text-red-600 text-sm pt-1">{message || ''}</span>
 					</ValidationMessage>
 				</div>
 			</div>
 
-		<button type="submit" disabled={$isValid ? false : true} class="btn btn-info w-full my-6"
+		<button type="submit" disabled={$isValid ? false : true} class="btn btn-accent w-full my-6"
 			>SAVE</button
 		>
 	</form>
