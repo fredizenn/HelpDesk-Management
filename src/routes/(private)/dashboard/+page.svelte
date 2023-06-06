@@ -16,14 +16,14 @@
                 <div class="text-gray-400">Tickets to be resolved</div>
             </svelte:fragment>
         </Card>
-        <Card title="Pending" labelIcon={Pause} styling="mt-2 lg:mt-0" labelColor="text-yellow-600"> 
+        <Card title="On Hold" labelIcon={Pause} styling="mt-2 lg:mt-0" labelColor="text-yellow-600"> 
             <svelte:fragment slot="content">
                 <div class="text-4xl font-semibold p-4">10</div>
                 <div class="text-gray-400">Tickets awaiting customer's response</div>
             </svelte:fragment>
 
         </Card>
-        <Card title="Closed" labelIcon={MinusCircle} styling="mt-2 lg:mt-0" labelColor="text-red-600">
+        <Card title="Cancelled" labelIcon={MinusCircle} styling="mt-2 lg:mt-0" labelColor="text-red-600">
             <svelte:fragment slot="content">
                 <div class="text-4xl font-semibold p-4">12</div>
                 <div class="text-gray-400">Closed tickets</div>

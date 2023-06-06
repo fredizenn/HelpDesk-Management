@@ -19,13 +19,13 @@
 	}
 
 	let loading = false;
-	let departments: any = [];
+	let faculties: any = [];
 
 	$: token = '';
 
 	onMount(async () => {
 		token = JSON.stringify(localStorage.getItem('token'));
-		getDepartments();
+		getFaculties();
 	});
 
 	const axiosInstance = axios.create({
@@ -36,14 +36,14 @@
 		}
 	});
 
-	let savingDepartment = false;
+	let savingFaculties = false;
 
-	async function getDepartments() {
+	async function getFaculties() {
 		loading = true;
 		await axiosInstance
-			.get('/departments')
+			.get('/faculties')
 			.then((response) => {
-				departments = response.data;
+				faculties = response.data;
 			})
 			.catch((error) => {
 				toast.error(error);
@@ -88,17 +88,17 @@
 		},
 		extend: [validator({ schema }), reporter],
 		onSubmit: async (values) => {
-			savingDepartment = true;
+			savingFaculties = true;
 			await axiosInstance
-				.post('/departments/create', {
+				.post('/faculties/create', {
 					...values
 				})
 				.then((response) => {
 					if (response.status === 201) {
 						console.log({ response });
-						toast.success('Department created successfully');
+						toast.success('Faculty created successfully');
 						closeForm();
-						getDepartments();
+						getFaculties();
 					} else {
 						console.log({ response });
 
@@ -108,7 +108,7 @@
 				.catch((error) => {
 					toast.error(error);
 				});
-			savingDepartment = false;
+			savingFaculties = false;
 		}
 	});
 </script>
@@ -116,9 +116,9 @@
 <div
 	class="w-full bg-white shadow justify-between rounded-lg p-4 flex items-center dark:bg-dark-card mb-2"
 >
-<div class="text-sm">Full list of existing departments</div>
+<div class="text-sm">Full list of existing faculties</div>
 	<div>
-		<AddButton dataTip="Create Department" click={() => (showForm = true)} />
+		<AddButton dataTip="Create Faculty" click={() => (showForm = true)} />
 	</div>
 </div>
 {#if loading}
@@ -140,11 +140,11 @@
 				</tr>
 			  </thead>
 			  <tbody class="divide-y divide-gray-200 bg-white">
-				{#each departments as department, index}
+				{#each faculties as faculty, index}
 				<tr>
 				<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{index + 1}</td>
-				  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{department.name}</td>
-				  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{department.code}</td>
+				  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{faculty.name}</td>
+				  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{faculty.code}</td>
 				 
 				</tr>
   {/each}
@@ -158,14 +158,14 @@
   
 {/if}
 
-<Modal title="New Department" bind:open={showForm} showIcon={false} on:close={() => (showForm = false)}>
+<Modal title="New Faculty" bind:open={showForm} showIcon={false} on:close={() => (showForm = false)}>
 	<form use:form>
 		<div class="md:grid grid-cols-2 gap-2">
 			<div>
 				<div class="form-control relative">
 					<label
 						class="label after:content-['*'] after:ml-0.5 after:text-red-500 block label-text"
-						for="contact-name">Department Name</label
+						for="contact-name">Faculty Name</label
 					>
 					<input
 						id="contact-name"
@@ -186,7 +186,7 @@
 				<div class="form-control relative">
 					<label
 						class="label after:content-['*'] after:ml-0.5 after:text-red-500 block label-text"
-						for="code">Department Code</label
+						for="code">Faculty Code</label
 					>
 					<input
 						id="code"
@@ -205,12 +205,12 @@
 			</div>
 		</div>
 
-		{#if !savingDepartment}
+		{#if !savingFaculties}
 			<button type="submit" disabled={$isValid ? false : true} class="btn btn-accent w-full my-6"
 				>SAVE</button
 			>
 		{:else}
-			<button disabled={true} class="btn btn-accent w-full my-6">CREATING DEPARTMENT...</button>
+			<button disabled={true} class="btn btn-accent w-full my-6">CREATING FACULTY...</button>
 		{/if}
 	</form>
 </Modal>

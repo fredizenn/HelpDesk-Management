@@ -27,14 +27,16 @@
 		<li>
 			<MenuItem icon={Ticket} to="/tickets" name="Tickets" />
 		</li>
-		<li>
-			<MenuItem icon={UserGroup} to="/agents" name="Agents" />
-		</li>
+		
 		<li>
 			<MenuItem icon={OfficeBuilding} to="/departments" name="Departments" />
 		</li>
 		<li>
 			<MenuItem icon={Library} to="/faculties" name="Faculties" />
+
+		</li>
+		<li>
+			<MenuItem icon={UserGroup} to="/agents" name="Agents" />
 		</li>
 		<li>
 			<MenuItem icon={ShieldExclamation} to="/admin" name="Admin" />

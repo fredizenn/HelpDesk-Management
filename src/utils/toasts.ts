@@ -1,31 +1,32 @@
-import { toasts } from 'svelte-toasts'
+import Swal from 'sweetalert2'
 
-export const clearAllToast = () => {
-    toasts.clearAll()
-}
-
-export const showSuccessToast = (message: string) => {
-    clearAllToast()
-    toasts.add({
-        title: 'Success',
-        description: message,
-        theme: 'dark',
-        placement: 'top-right',
-        type: 'success',
-        showProgress: true,
-        duration: 3000
+export function dialog(title: string, message: string) {
+    return Swal.fire({
+      title: title,
+      text: message,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      confirmButtonColor: '#5cb85c',
+      cancelButtonColor: '#d33',
     })
-}
+  }
 
-export const showErrorToast = (message: string) => {
-    clearAllToast()
-    toasts.add({
-        title: 'Error',
-        description: message,
-        theme: 'dark',
-        placement: 'top-right',
-        type: 'error',
-        showProgress: true,
-        duration: 3000
-    })
-}
+
+  export class ResponseDialog {
+    static wait(message: string) {
+        Swal.fire({
+          title: message,
+          allowOutsideClick: false,
+        })
+        Swal.showLoading()
+      }
+
+      static dismissLoading() {
+        Swal.close()
+      }
+  }
+
+
+

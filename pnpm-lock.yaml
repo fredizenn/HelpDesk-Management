@@ -10,6 +10,7 @@ specifiers:
   '@iconify/icons-ic': ^1.2.13
   '@iconify/icons-material-symbols': ^1.2.34
   '@iconify/icons-mdi': ^1.2.44
+  '@iconify/icons-tabler': ^1.2.74
   '@iconify/svelte': ^3.1.1
   '@sveltejs/adapter-auto': ^1.0.2
   '@sveltejs/kit': ^1.0.0
@@ -18,6 +19,7 @@ specifiers:
   autoprefixer: ^10.4.13
   axios: ^1.3.4
   daisyui: ^2.47.0
+  dayjs: ^1.11.7
   echarts: ^5.4.1
   eslint: ^8.28.0
   eslint-config-prettier: ^8.5.0
@@ -33,6 +35,7 @@ specifiers:
   svelte-french-toast: ^1.0.4-beta.0
   svelte-hero-icons: ^4.1.3
   svelte-toasts: ^1.1.2
+  sweetalert2: ^11.7.3
   tailwindcss: ^3.2.4
   tippy.js: ^6.3.7
   tslib: ^2.4.1
@@ -47,6 +50,7 @@ dependencies:
   '@sveltejs/adapter-auto': 1.0.3_@sveltejs+kit@1.15.5
   axios: 1.3.5
   daisyui: 2.51.5_j7yt3jd32cwenjqavrrga47yr4
+  dayjs: 1.11.7
   echarts: 5.4.2
   felte: 1.2.7_svelte@3.58.0
   svelecte: 4.0.0-alpha.10
@@ -54,6 +58,7 @@ dependencies:
   svelte-french-toast: 1.0.4-beta.0_svelte@3.58.0
   svelte-hero-icons: 4.1.3
   svelte-toasts: 1.1.2
+  sweetalert2: 11.7.3
   tippy.js: 6.3.7
   yup: 0.32.11
 
@@ -64,6 +69,7 @@ devDependencies:
   '@iconify/icons-ic': 1.2.13
   '@iconify/icons-material-symbols': 1.2.36
   '@iconify/icons-mdi': 1.2.44
+  '@iconify/icons-tabler': 1.2.74
   '@iconify/svelte': 3.1.1_svelte@3.58.0
   '@sveltejs/kit': 1.15.5_svelte@3.58.0+vite@4.2.1
   '@typescript-eslint/eslint-plugin': 5.58.0_hzv37tkb63et4viajosjuuyxgi
@@ -398,6 +404,12 @@ packages:
 
   /@iconify/icons-mdi/1.2.44:
     resolution: {integrity: sha512-j1hw1Ar1EMz74Ehg1BwQ5h69gO++9GZqJYye2huvl9jPgvXqlNmwAFWOVZQ3EoLTfoAwcp8awfQh3FcMvaqyuA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify/icons-tabler/1.2.74:
+    resolution: {integrity: sha512-n88NcfR4hzv7iG9IFGEip6j5ow0CPZhkPEaxd4BIbD1jqIHFjQAinVsH7YyZ/2BYj6HWiGUjakccrwJ9uF0DZQ==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
@@ -918,6 +930,10 @@ packages:
       tailwindcss: 3.3.1_postcss@8.4.21
     transitivePeerDependencies:
       - ts-node
+    dev: false
+
+  /dayjs/1.11.7:
+    resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
     dev: false
 
   /debug/4.3.4:
@@ -2099,6 +2115,10 @@ packages:
   /svelte/3.58.0:
     resolution: {integrity: sha512-brIBNNB76mXFmU/Kerm4wFnkskBbluBDCjx/8TcpYRb298Yh2dztS2kQ6bhtjMcvUhd5ynClfwpz5h2gnzdQ1A==}
     engines: {node: '>= 8'}
+
+  /sweetalert2/11.7.3:
+    resolution: {integrity: sha512-fUN/fyVSBZNtY4Rr/Qtxn7tNNnlRAbUhQxTQ9uOo0xVMIHBmqq4/9pau5N9dB2pvkB353XL/ywRAycscLoYU3w==}
+    dev: false
 
   /tailwindcss/3.3.1_postcss@8.4.21:
     resolution: {integrity: sha512-Vkiouc41d4CEq0ujXl6oiGFQ7bA3WEhUZdTgXAhtKxSy49OmKs8rEfQmupsfF0IGW8fv2iQkp1EVUuapCFrZ9g==}

@@ -3,10 +3,7 @@ export interface ITicket {
     contactName: string,
     contactPhoneNumber: string,
     contactEmail: string,
-    type: string,
-    priority: string,
-    departmentId: any,
-    facultyId: any;
+    code: string
 }
 
 export const initTicket: ITicket = {
@@ -14,8 +11,5 @@ export const initTicket: ITicket = {
     contactName: '',
     contactEmail: '',
     contactPhoneNumber: '',
-    type: '',
-    priority: '',
-    departmentId: null,
-    facultyId: null
+    code: ''
 }
