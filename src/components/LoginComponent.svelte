@@ -9,6 +9,7 @@
     import axios from 'axios';
     import toast, { Toaster } from 'svelte-french-toast';
     import { loggedIn, token } from "../store";
+    import logoText from '../assets/wiuc-text.png'
 
 
     let username = '';
@@ -77,7 +78,8 @@
 </script>
 
 <Toaster />
-<Card title="Login" titleStyle="" styling="md:mt-28 md:w-2/6 mx-auto align-middle bg-gray-200">
+<div class="mx-auto align-middle"><img src={logoText} class="mt-10 mx-auto align-middle" alt="logo" /></div>
+<Card title="HelpDesk Login" titleStyle="" styling="md:mt-10 md:w-2/6 mx-auto align-middle bg-gray-200">
     <svelte:fragment slot="content">
 <form use:form class=""> 
         <div class="form-control">

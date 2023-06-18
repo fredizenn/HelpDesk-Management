@@ -11,7 +11,6 @@
 	import { reporter, ValidationMessage } from '@felte/reporter-svelte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import VIcon from '../../../components/controls/VIcon.svelte';
 	import Svelecte from 'svelecte';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
@@ -31,6 +30,18 @@
 	function closeForm () {
 		showForm = false
 	}
+
+	let loadingResolved: boolean;
+    let loadingOnHold: boolean;
+    let loadingCancelled: boolean;
+    let loadingOpen: boolean;
+    let loadingHighPriority: boolean;
+
+    let totalResolved: any;
+    let totalOpen: any;
+    let totalCancelled: any;
+    let totalHighPriority: any;
+    let totalOnHold: any;
 
 	let ticketPriority = [
 		{
@@ -124,7 +135,11 @@
 		token = JSON.stringify(localStorage.getItem('token'));
 		getTickets();
 		getDepartments();
-		getFaculties();	
+		getFaculties();
+	    getTotalResolvedTickets();
+        getTotalOpenTickets();
+        getTotalTicketsOnHold();
+        getTotalCancelledTickets();
 	});
 
 	const axiosInstance =  axios.create({
@@ -398,16 +413,60 @@
 			};
 		}
 	}
+
+	async function getTotalResolvedTickets () {
+        loadingResolved = true;
+        await axiosInstance
+            .get('/tickets/totalResolvedTickets')
+            .then((response) => {
+                totalResolved = response.data;
+            })
+            .catch((error) => {})
+        loadingResolved = false;
+    }
+
+    async function getTotalOpenTickets () {
+        loadingOpen = true;
+        await axiosInstance
+            .get('/tickets/totalOpenTickets')
+            .then((response) => {
+                totalOpen = response.data;
+            })
+            .catch((error) => {})
+        loadingOpen = false;
+    }
+
+    async function getTotalTicketsOnHold () {
+        loadingResolved = true;
+        await axiosInstance
+            .get('/tickets/totalTicketsOnHold')
+            .then((response) => {
+                totalOnHold = response.data;
+            })
+            .catch((error) => {})
+        loadingResolved = false;
+    }
+
+	async function getTotalCancelledTickets () {
+        loadingCancelled = true;
+        await axiosInstance
+            .get('/tickets/totalCancelledTickets')
+            .then((response) => {
+                totalCancelled = response.data;
+            })
+            .catch((error) => {})
+        loadingCancelled = false;
+    }
 </script>
 <Toaster />
 
 <div class="overflow-hidden">
 <div class="w-full bg-white shadow rounded-lg p-4 flex justify-between items-center dark:bg-dark-card mb-2">
 	<div class="flex space-x-2 divide-x-2">
-		<div class="p-2 text-blue-900 font-medium">Open: {0}</div>
-		<div class="p-2 text-blue-900 font-medium">Resolved: {0}</div>
-		<div class="p-2 text-blue-900 font-medium">On Hold: {0}</div>
-		<div class="p-2 text-blue-900 font-medium">Cancelled: {0}</div>
+		<div class="p-2 text-blue-900 font-medium">Open: {totalOpen || 0}</div>
+		<div class="p-2 text-blue-900 font-medium">Resolved: {totalResolved || 0}</div>
+		<div class="p-2 text-blue-900 font-medium">On Hold: {totalOnHold || 0}</div>
+		<div class="p-2 text-blue-900 font-medium">Cancelled: {totalCancelled || 0}</div>
 	</div>
 	<div class="">
 		<AddButton dataTip="Create Ticket" click={() => (showForm = true)} />
@@ -552,7 +611,6 @@
 							type="text"
 							name="contactName"
 						/>
-						<VIcon touched={$touched.contactName} errors={$errors.contactName} />
 					</div>
 					<ValidationMessage for="contactName" let:messages={message}>
 						<span class="text-red-600 text-sm pt-1">{message || ''}</span>
@@ -570,7 +628,6 @@
 							type="text"
 							name="contactPhoneNumber"
 						/>
-						<VIcon touched={$touched.contactPhoneNumber} errors={$errors.contactPhoneNumber} />
 					</div>
 					<ValidationMessage for="contactPhoneNumber" let:messages={message}>
 						<span class="text-red-600 text-sm pt-1">{message || ''}</span>
@@ -588,7 +645,6 @@
 							type="text"
 							name="contactEmail"
 						/>
-						<VIcon touched={$touched.contactEmail} errors={$errors.contactEmail} />
 					</div>
 					<ValidationMessage for="contactEmail" let:messages={message}>
 						<span class="text-red-600 text-sm pt-1">{message || ''}</span>
@@ -606,7 +662,6 @@
 							type="text"
 							name="code"
 						/>
-						<VIcon touched={$touched.code} errors={$errors.code} />
 					</div>
 					<ValidationMessage for="code" let:messages={message}>
 						<span class="text-red-600 text-sm pt-1">{message || ''}</span>
@@ -625,7 +680,6 @@
 						)}"
 						name="ticketDescription"
 					/>
-					<VIcon touched={$touched.ticketDescription} errors={$errors.ticketDescription} />
 				</div>
 				<ValidationMessage for="ticketDescription" let:messages={message}>
 					<span class="text-red-600 text-sm pt-1">{message || ''}</span>

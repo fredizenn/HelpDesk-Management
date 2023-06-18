@@ -4,6 +4,11 @@
 
     // export let text: any = ""
 
+    export let totalOpen: any;
+    export let totalResolved: any;
+    export let totalCancelled: any;
+    export let totalOnHold: any;
+
     onMount(async () => {
     echarts.init(document.getElementById("pie")!).setOption({
       title: { text: "" },
@@ -23,7 +28,11 @@
         {
           type: "pie",
           smooth: true,
-          data: [[12, 5], [24, 20], [36, 36], [48, 10]]
+          data: [{name: "Open Tickets", value: totalOpen},
+          {name: "Cancelled Tickets", value: totalCancelled},
+          {name: "Tickets On Hold", value: totalOnHold},
+          {name: "Resolved Tickets", value: totalResolved},
+        ]
         }
       ]
     });

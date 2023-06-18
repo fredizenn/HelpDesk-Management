@@ -11,6 +11,7 @@ specifiers:
   '@iconify/icons-material-symbols': ^1.2.34
   '@iconify/icons-mdi': ^1.2.44
   '@iconify/icons-tabler': ^1.2.74
+  '@iconify/icons-uil': ^1.2.3
   '@iconify/svelte': ^3.1.1
   '@sveltejs/adapter-auto': ^1.0.2
   '@sveltejs/kit': ^1.0.0
@@ -70,6 +71,7 @@ devDependencies:
   '@iconify/icons-material-symbols': 1.2.36
   '@iconify/icons-mdi': 1.2.44
   '@iconify/icons-tabler': 1.2.74
+  '@iconify/icons-uil': 1.2.3
   '@iconify/svelte': 3.1.1_svelte@3.58.0
   '@sveltejs/kit': 1.15.5_svelte@3.58.0+vite@4.2.1
   '@typescript-eslint/eslint-plugin': 5.58.0_hzv37tkb63et4viajosjuuyxgi
@@ -410,6 +412,12 @@ packages:
 
   /@iconify/icons-tabler/1.2.74:
     resolution: {integrity: sha512-n88NcfR4hzv7iG9IFGEip6j5ow0CPZhkPEaxd4BIbD1jqIHFjQAinVsH7YyZ/2BYj6HWiGUjakccrwJ9uF0DZQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify/icons-uil/1.2.3:
+    resolution: {integrity: sha512-loI7/zYhXo7ovDY/l5gfQ1BkVLryEtzMeB1Ch1gA1YIYpsqXnV8IVsiX3TQYp6RpPjI+9De1ngGv0nC4aoqosA==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

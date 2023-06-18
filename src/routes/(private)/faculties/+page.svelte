@@ -123,7 +123,7 @@
 </div>
 {#if loading}
 	<div><Icon icon={threeDotsLoading} class="w-14 h-14 mx-auto" /></div>
-{:else}
+{:else if faculties.length > 0}
 
 <div class="px-4 sm:px-6 lg:px-8">
 	
@@ -135,8 +135,8 @@
 			  <thead class="bg-gray-50">
 				<tr>
 				<th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">#</th>
-				  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Department Name</th>
-				  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Department Code</th>
+				  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Faculty Name</th>
+				  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Faculty Code</th>
 				</tr>
 			  </thead>
 			  <tbody class="divide-y divide-gray-200 bg-white">
@@ -155,7 +155,8 @@
 	  </div>
 	</div>
   </div>
-  
+  {:else}
+  <div class="mx-auto text-center align-middle">No data found</div>
 {/if}
 
 <Modal title="New Faculty" bind:open={showForm} showIcon={false} on:close={() => (showForm = false)}>
