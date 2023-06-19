@@ -246,49 +246,55 @@
 		}
 	}
 
-	const { form, touched, data, isValid, errors } = createForm({
-		initialValues: {
-			...initTicket,
-		},
-		extend: [validator({ schema }), reporter],
-		onSubmit: async (values) => {
-			if (type === '' || type === undefined) {
-				return toast.error("Please select a ticket type")
-			}
+	//create ticket
+	// Destructuring variables from the result of createForm function
+const { form, touched, data, isValid, errors } = createForm({
+    // Initial form values
+    initialValues: {
+        ...initTicket,
+    },
+    // Extensions applied to the form (validator and reporter)
+    extend: [validator({ schema }), reporter],
+    // Form submission logic
+    onSubmit: async (values) => {
+        // Check if the ticket type is selected
+        if (type === '' || type === undefined) {
+            return toast.error("Please select a ticket type");
+        }
+        // Check if the ticket priority level is selected
+        else if (priority === '' || priority === undefined) {
+            return toast.error('Please select ticket priority level');
+        }
+        else {
+            // Set the savingTicket flag to indicate that the ticket is being saved
+            savingTicket = true;
 
-			else if (priority === '' || priority === undefined) {
-				return toast.error('Please select ticket priority level')
-			}
+            // Send a POST request to create a ticket
+            await axiosInstance.post('/tickets/create', {
+                ...values, type, departmentId, facultyId, priority
+            })
+            .then((response) => {
+                if (response.status === 201) {
+                    console.log({ response });
+                    toast.success("Ticket created successfully");
+                    closeForm();
+                    getTickets();
+                }
+                else {
+                    console.log({ response });
+                    toast.error(response.data.response);
+                }
+            })
+            .catch((error) => {
+                toast.error(error);
+            });
 
-			else {
-				savingTicket = true;
-			await axiosInstance.post('/tickets/create', {
-				...values, type, departmentId, facultyId, priority
-			})
-			.then((response) => {
-				if(response.status === 201)
-				{
-				console.log({response})
-				toast.success("Ticket created successfully");
-				closeForm();
-			 	getTickets();  
-				}
-				else {
-					console.log({response})
+            // Set the savingTicket flag to indicate that the ticket saving is complete
+            savingTicket = false;
+        }
+    }
+});
 
-					toast.error(response.data.response)
-				}
-
-			})
-			.catch((error) => {
-				toast.error(error);
-			});
-			savingTicket = false;
-			}
-
-			
-		}
-	});
 
 	async function resolveTicket (id: any) {
 		if (!id) return;
@@ -414,49 +420,88 @@
 		}
 	}
 
-	async function getTotalResolvedTickets () {
-        loadingResolved = true;
-        await axiosInstance
-            .get('/tickets/totalResolvedTickets')
-            .then((response) => {
-                totalResolved = response.data;
-            })
-            .catch((error) => {})
-        loadingResolved = false;
-    }
+	// Fetches the total number of open tickets
+async function getTotalOpenTickets() {
+    // Set the loadingOpen flag to indicate that the request is in progress
+    loadingOpen = true;
 
-    async function getTotalOpenTickets () {
-        loadingOpen = true;
-        await axiosInstance
-            .get('/tickets/totalOpenTickets')
-            .then((response) => {
-                totalOpen = response.data;
-            })
-            .catch((error) => {})
-        loadingOpen = false;
-    }
+    // Send a GET request to retrieve the total open tickets
+    await axiosInstance
+        .get('/tickets/totalOpenTickets')
+        .then((response) => {
+            // Update the totalOpen variable with the response data
+            totalOpen = response.data;
+        })
+        .catch((error) => {
+            // Error occurred, handle it appropriately (not shown in the code)
+        });
 
-    async function getTotalTicketsOnHold () {
-        loadingResolved = true;
-        await axiosInstance
-            .get('/tickets/totalTicketsOnHold')
-            .then((response) => {
-                totalOnHold = response.data;
-            })
-            .catch((error) => {})
-        loadingResolved = false;
-    }
+    // Set the loadingOpen flag to indicate that the request is complete
+    loadingOpen = false;
+}
 
-	async function getTotalCancelledTickets () {
-        loadingCancelled = true;
-        await axiosInstance
-            .get('/tickets/totalCancelledTickets')
-            .then((response) => {
-                totalCancelled = response.data;
-            })
-            .catch((error) => {})
-        loadingCancelled = false;
-    }
+	// Fetches the total number of resolved tickets
+async function getTotalResolvedTickets() {
+    // Set the loadingResolved flag to indicate that the request is in progress
+    loadingResolved = true;
+
+    // Send a GET request to retrieve the total resolved tickets
+    await axiosInstance
+        .get('/tickets/totalResolvedTickets')
+        .then((response) => {
+            // Update the totalResolved variable with the response data
+            totalResolved = response.data;
+        })
+        .catch((error) => {
+            // Error occurred, handle it appropriately (not shown in the code)
+        });
+
+    // Set the loadingResolved flag to indicate that the request is complete
+    loadingResolved = false;
+}
+
+
+   // Fetches the total number of tickets on hold
+async function getTotalTicketsOnHold() {
+    // Set the loadingResolved flag to indicate that the request is in progress
+    loadingOnHold = true;
+
+    // Send a GET request to retrieve the total tickets on hold
+    await axiosInstance
+        .get('/tickets/totalTicketsOnHold')
+        .then((response) => {
+            // Update the totalOnHold variable with the response data
+            totalOnHold = response.data;
+        })
+        .catch((error) => {
+            // Error occurred, handle it appropriately (not shown in the code)
+        });
+
+    // Set the loadingResolved flag to indicate that the request is complete
+    loadingOnHold = false;
+}
+
+
+	// Fetches the total number of cancelled tickets
+async function getTotalCancelledTickets() {
+    // Set the loadingCancelled flag to indicate that the request is in progress
+    loadingCancelled = true;
+
+    // Send a GET request to retrieve the total cancelled tickets
+    await axiosInstance
+        .get('/tickets/totalCancelledTickets')
+        .then((response) => {
+            // Update the totalCancelled variable with the response data
+            totalCancelled = response.data;
+        })
+        .catch((error) => {
+            // Error occurred, handle it appropriately (not shown in the code)
+        });
+
+    // Set the loadingCancelled flag to indicate that the request is complete
+    loadingCancelled = false;
+}
+
 </script>
 <Toaster />
 
@@ -479,8 +524,8 @@
 		{#if loadingTickets}
 		<div><Icon icon={threeDotsLoading} class="w-14 h-14 mx-auto"/>
 		</div>
-		{:else if ticketData.length > 0}
-			
+		<!-- if number of tickets is more than zero, show this list -->
+		{:else if ticketData.length > 0}			
 			{#each ticketData as ticket}
 				<li class="m-1 rounded-sm bg-white shadow">
 					<a href="#" class="block hover:bg-gray-50">
